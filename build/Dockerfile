@@ -9,13 +9,16 @@
 # Only compiled output from first stage will be moved to the second so small size of the container will be preserved.
 FROM node AS build
 WORKDIR /app
-ADD package.json ./
+ADD package.json .
 RUN npm install
 COPY . .
 RUN npm run build
-EXPOSE 4500
-CMD npm run start
+#CMD npm run start -- --port 4500 --host 0.0.0.0
 ### STAGE 2: Run ###
-#FROM nginx
+FROM nginx
+#COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf  ## default hostname is localhost and port 80
 # 'from' flag tell Docker that it needs to copy compiled files from build stage ###
-#COPY --from=build /app/dist/service-web-app /usr/share/nginx/html
+COPY --from=build /app/dist/service-web-app /usr/share/nginx/html
+EXPOSE 80   ## as the default port that nginx expose is 80 we expose that one
+# run nginx
+CMD ["nginx", "-g", "daemon off;"]
