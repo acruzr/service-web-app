@@ -15,7 +15,7 @@ node {
 	}
 	stage('docker build/push') {
 		docker.withRegistry('', '052d6a55-7fa3-49a6-8925-5bf2871fa151') {
-			def app = docker.build("acruzr/service-web-app", 'build').push()
+			def app = docker.build("acruzr/service-web-app", 'build/Dockerfile .').push()
 		}
 	}
 }
