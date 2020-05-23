@@ -13,8 +13,9 @@ ADD package.json ./
 RUN npm install
 COPY . .
 RUN npm run build
-
+EXPOSE 4500
+CMD npm run start
 ### STAGE 2: Run ###
-FROM nginx
+#FROM nginx
 # 'from' flag tell Docker that it needs to copy compiled files from build stage ###
-COPY --from=build /app/dist/service-web-app /usr/share/nginx/html
+#COPY --from=build /app/dist/service-web-app /usr/share/nginx/html
