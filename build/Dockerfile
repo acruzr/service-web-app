@@ -19,6 +19,7 @@ FROM nginx
 #COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf  ## default hostname is localhost and port 80
 # 'from' flag tell Docker that it needs to copy compiled files from build stage ###
 COPY --from=build /app/dist/service-web-app /usr/share/nginx/html
-EXPOSE 80   ## as the default port that nginx expose is 80 we expose that one
+# as the default port that nginx expose is 80 we expose that one
+EXPOSE 80
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
